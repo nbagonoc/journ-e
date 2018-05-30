@@ -1,0 +1,16 @@
+{
+  "name": "journ-e",
+  "version": "1.0.0",
+  "description": "an online journal for everyone",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js"
+  },
+  "author": "Niccu Bagonoc",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.1.3"
+  }
+}

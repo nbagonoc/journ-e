@@ -1,0 +1,4 @@
+/node_modules
+/config/db_secret_key_dev.js
+/.vscode
+package-lock.json
