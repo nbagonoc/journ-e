@@ -1,0 +1,14 @@
+<div class="text-center">
+    <h1 class="text-danger">Welcome to JOURNe</h1>
+    <p class="lead text-muted">An online eJournal for eveyone</p>
+
+    {{#if user}}
+    <a href="/dashboard" class="btn btn-danger">
+        <i class="fas fa-pencil-alt mr-1"></i> Get Started
+    </a>
+    {{else}}
+    <a href="/auth/google" class="btn btn-danger">
+        <i class="fab fa-google"></i> Login with Google
+    </a>
+    {{/if}}
+</div>

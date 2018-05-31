@@ -19,4 +19,19 @@ router.get(
   }
 );
 
+// GET | check if authenticated
+router.get("/verify", (req, res) => {
+  if (req.user) {
+    console.log(req.user);
+  } else {
+    console.log("not auth");
+  }
+});
+
+// GET | logout
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+
 module.exports = router;
