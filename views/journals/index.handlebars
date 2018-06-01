@@ -4,7 +4,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <a href="/journals/show/{{id}}" class="text-success">
-                    <h3 class="text-capitalize mb-0 ">{{title}}</h3>
+                    <h4 class="text-capitalize mb-0 ">{{title}}</h4>
                 </a>
                 <span class="text-muted small ">By: {{user.firstName}} | on {{formatDate date 'MMMM do YYYY'}}</span>
                 <p class="mt-2">{{stripper (truncate body 150)}}</p>
