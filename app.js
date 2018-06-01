@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
 const methodOverride = require("method-override");
+const expressValidator = require("express-validator");
+const flash = require("connect-flash");
 
 // INITIALIZE APP
 const app = express();
@@ -54,6 +56,17 @@ app.use(passport.session());
 // body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// express validator
+app.use(expressValidator());
+// connect flash
+app.use(flash());
+// Global consts
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.errors = req.flash("errors");
+  next();
+});
 // method-override
 app.use(methodOverride("_method"));
 // express-handlebars

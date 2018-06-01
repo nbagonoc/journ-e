@@ -58,9 +58,11 @@ router.get("/show/:id", (req, res) => {
               journal
             });
           } else {
+            req.flash("error_msg", "Not authorized");
             res.redirect("/journals");
           }
         } else {
+          req.flash("error_msg", "Not authorized");
           res.redirect("/journals");
         }
       }
@@ -92,16 +94,28 @@ router.post("/add", ensureAuthenticated, (req, res) => {
     user: req.user.id
   };
 
-  // send values to DB, and redirect to the dashboard
-  new Journal(newJournal).save().then(journal => {
-    res.redirect("/dashboard");
-  });
+  // validator
+  req.check("title", "title is required").notEmpty();
+  req.check("body", "content is required").notEmpty();
+
+  const errors = req.validationErrors();
+
+  if (errors) {
+    res.render("journals/add", { errors });
+  } else {
+    // send values to DB, and redirect to the dashboard
+    new Journal(newJournal).save().then(journal => {
+      req.flash("success_msg", "You have successfully added a journal");
+      res.redirect("/dashboard");
+    });
+  }
 });
 
 // GET | display edit form
 router.get("/edit/:id", ensureAuthenticated, (req, res) => {
   Journal.findOne({ _id: req.params.id }).then(journal => {
     if (journal.user != req.user.id) {
+      req.flash("error_msg", "Not authorized");
       res.redirect("/journals");
     } else {
       res.render("journals/edit", {
@@ -131,6 +145,7 @@ router.patch("/edit/:id", ensureAuthenticated, (req, res) => {
 
     // send updated values to DB, and redirect to dashboard
     journal.save().then(journal => {
+      req.flash("success_msg", "You have successfully edited your journal");
       res.redirect("/dashboard");
     });
   });
@@ -139,15 +154,14 @@ router.patch("/edit/:id", ensureAuthenticated, (req, res) => {
 // DELETE | delete a journal
 router.delete("/delete/:id", ensureAuthenticated, (req, res) => {
   Journal.remove({ _id: req.params.id }).then(() => {
+    req.flash("success_msg", "You have successfully deleted a journal");
     res.redirect("/dashboard");
   });
 });
 
 // POST | Add comment to a journal
 router.post("/comment/:id", ensureAuthenticated, (req, res) => {
-  Journal.findOne({
-    _id: req.params.id
-  }).then(journal => {
+  Journal.findOne({ _id: req.params.id }).then(journal => {
     const newComment = {
       commentBody: req.body.commentBody,
       commentUser: req.user.id
@@ -158,6 +172,10 @@ router.post("/comment/:id", ensureAuthenticated, (req, res) => {
 
     // send to DB, and redirect to journal
     journal.save().then(journal => {
+      req.flash(
+        "success_msg",
+        "You have successfully made a comment to this journal"
+      );
       res.redirect(`/journals/show/${journal.id}`);
     });
   });
