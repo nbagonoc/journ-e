@@ -8,7 +8,7 @@
             <div class="content">
                 {{{journal.body}}}
             </div>
-            {{{editableIfUser journal.user.id user.id story.id}}}
+            {{{editableIfUser journal.user.id user.id journal.id}}}
         </div>
     </div>
     {{#if journal.allowComments}}
