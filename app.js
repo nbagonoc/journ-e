@@ -2,15 +2,18 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const path = require("path");
-const passport = require("passport");
+const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const passport = require("passport");
+const methodOverride = require("method-override");
 
 // INITIALIZE APP
 const app = express();
 
 // MODELS
 require("./models/User");
+require("./models/Journal");
 
 // CONFIGS
 // mongoDB
@@ -23,6 +26,15 @@ mongoose
   .connect(db_secret_key.mongoURI)
   .then(() => console.log("we are connected to our DB"))
   .catch(err => console.log(err));
+
+// HELPERS
+const {
+  truncate,
+  stripper,
+  formatDate,
+  select,
+  editableIfUser
+} = require("./helpers/hbs");
 
 // MIDDLEWARES
 // cookie-parser
@@ -39,10 +51,27 @@ app.use(
 // passport
 app.use(passport.initialize());
 app.use(passport.session());
+// body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+// method-override
+app.use(methodOverride("_method"));
 // express-handlebars
 app.engine(
   "handlebars",
   exphbs({
+    helpers: {
+      // truncates the journals at the public journals
+      truncate,
+      // strips the HTML tag at the public journals
+      stripper,
+      // formats the date using moment
+      formatDate,
+      // selects the properly selected option for the edit form page
+      select,
+      // shows the edit button if you are the user on journals
+      editableIfUser
+    },
     defaultLayout: "main"
   })
 );
@@ -58,10 +87,12 @@ app.use((req, res, next) => {
 // ROUTES
 const index = require("./routes/index");
 const auth = require("./routes/auth");
+const journals = require("./routes/journals");
 
 // USE ROUTES
 app.use("/", index);
 app.use("/auth", auth);
+app.use("/journals", journals);
 
 // STATIC FOLDER
 app.use(express.static(path.join(__dirname, "public")));

@@ -1,14 +1,16 @@
-<div class="text-center">
-    <h1 class="text-danger">Welcome to JOURNe</h1>
-    <p class="lead text-muted">An online eJournal for eveyone</p>
+<div class="cover">
+    <div class="cover-text">
+        <h1 class="mb-0 display-2 text-success font-weight-bold">JOURNe</h1>
+        <p class="display-4 text-secondary mb-4">The online eJournal for everyone</p>
 
-    {{#if user}}
-    <a href="/dashboard" class="btn btn-danger">
-        <i class="fas fa-pencil-alt mr-1"></i> Get Started
-    </a>
-    {{else}}
-    <a href="/auth/google" class="btn btn-danger">
-        <i class="fab fa-google"></i> Login with Google
-    </a>
-    {{/if}}
+        {{#if user}}
+        <a href="/journals/add" class="btn btn-dark btn-lg">
+            <i class="fas fa-pencil-alt mr-1"></i> Get Started
+        </a>
+        {{else}}
+        <a href="/auth/google" class="btn btn-danger btn-lg">
+            <i class="fab fa-google"></i> Login with Google
+        </a>
+        {{/if}}
+    </div>
 </div>

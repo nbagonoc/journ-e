@@ -1,0 +1,40 @@
+<div class="container mt-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h1 class="text-capitalize display-5 mb-0">{{journal.title}}</h1>
+            <span class="text-muted small">By:
+                <a href="/journals/user/{{journal.user.id}}" class="text-success">{{journal.user.firstName}}</a> | On {{formatDate date 'MMMM do YYYY'}}
+            </span>
+            <div class="content">
+                {{{journal.body}}}
+            </div>
+            {{{editableIfUser journal.user.id user.id story.id}}}
+        </div>
+    </div>
+    {{#if journal.allowComments}}
+    <div class="card mt-3 shadow-sm">
+        <div class="card-body">
+            <h5>Leave A Comment</h5>
+            {{#if user}}
+            <form action="/journals/comment/{{journal.id}}" method="post">
+                <div class="form group">
+                    <textarea name="commentBody" class="form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">
+                    <i class="fas fa-check-circle mr-1"></i>Submit</button>
+            </form>
+            {{else}}
+            <a href="/auth/google" class="btn btn-danger btn-sm">
+                <i class="fab fa-google mr-1"></i>Login with Google</a> to leave a comment {{/if}}
+        </div>
+    </div>
+    {{#each journal.comments}}
+    <div class="card mt-3 shadow-sm">
+        <div class="card-body">
+            <p class="mb-0">{{commentBody}}</p>
+            <span class="text-muted small">By:
+                <a href="/journals/user/{{commentUser.id}}" class="text-success">{{commentUser.firstName}}</a> | On: {{formatDate commentDate 'MMMM Do YYYY'}}</span>
+        </div>
+    </div>
+    {{/each}} {{/if}}
+</div>

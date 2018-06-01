@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="/">JOURNe</a>
+        <a class="navbar-brand text-success font-weight-bold" href="/">JOURNe</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07"
             aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,28 +9,28 @@
         <div class="collapse navbar-collapse" id="navbarsExample07">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">
+                    <a class="nav-link text-success" href="/">
                         <i class="fas fa-home mr-1"></i>Home</a>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/stories">
+                    <a class="nav-link text-success" href="/journals">
                         <i class="fas fa-book mr-1"></i>Public Journals</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 {{#if user}}
                 <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">
+                    <a class="nav-link text-success" href="/dashboard">
                         <i class="fas fa-user mr-2"></i>{{user.firstName}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/auth/logout">
+                    <a class="nav-link text-success" href="/auth/logout">
                         <i class="fas fa-sign-out-alt mr-1"></i>Logout</a>
                 </li>
                 {{else}}
-                <li class="nav-item">
-                    <a class="nav-link" href="/auth/google">
+                <li class="nav-item text-success">
+                    <a class="nav-link text-danger" href="/auth/google">
                         <i class="fab fa-google mr-1"></i>Login
                     </a>
                 </li>
