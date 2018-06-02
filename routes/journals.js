@@ -143,11 +143,21 @@ router.patch("/edit/:id", ensureAuthenticated, (req, res) => {
     journal.status = req.body.status;
     journal.allowComments = allowComments;
 
-    // send updated values to DB, and redirect to dashboard
-    journal.save().then(journal => {
-      req.flash("success_msg", "You have successfully edited your journal");
-      res.redirect("/dashboard");
-    });
+    // validator
+    req.check("title", "title is required").notEmpty();
+    req.check("body", "content is required").notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+      res.render("journals/edit", { errors });
+    } else {
+      // send updated values to DB, and redirect to dashboard
+      journal.save().then(journal => {
+        req.flash("success_msg", "You have successfully edited your journal");
+        res.redirect("/dashboard");
+      });
+    }
   });
 });
 
@@ -159,7 +169,7 @@ router.delete("/delete/:id", ensureAuthenticated, (req, res) => {
   });
 });
 
-// POST | Add comment to a journal
+// POST | Add comment to a journal process
 router.post("/comment/:id", ensureAuthenticated, (req, res) => {
   Journal.findOne({ _id: req.params.id }).then(journal => {
     const newComment = {
