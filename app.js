@@ -3,7 +3,6 @@ const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const path = require("path");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
 const methodOverride = require("method-override");
@@ -39,8 +38,6 @@ const {
 } = require("./helpers/hbs");
 
 // MIDDLEWARES
-// cookie-parser
-app.use(cookieParser());
 // express-session
 app.use(
   session({
