@@ -101,7 +101,7 @@ router.post("/add", ensureAuthenticated, (req, res) => {
   const errors = req.validationErrors();
 
   if (errors) {
-    res.render("journals/add", { errors });
+    res.render("journals/add", { errors, newJournal });
   } else {
     // send values to DB, and redirect to the dashboard
     new Journal(newJournal).save().then(journal => {
@@ -150,12 +150,12 @@ router.patch("/edit/:id", ensureAuthenticated, (req, res) => {
     const errors = req.validationErrors();
 
     if (errors) {
-      res.render("journals/edit", { errors });
+      res.render("journals/edit", { errors, journal });
     } else {
       // send updated values to DB, and redirect to dashboard
       journal.save().then(journal => {
         req.flash("success_msg", "You have successfully edited your journal");
-        res.redirect("/dashboard");
+        res.redirect(`/journals/show/${journal.id}`);
       });
     }
   });
