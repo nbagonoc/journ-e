@@ -3,7 +3,7 @@
         <div class="card-body">
             <h1 class="text-capitalize display-5 mb-0">{{journal.title}}</h1>
             <span class="text-muted small">By:
-                <a href="/journals/user/{{journal.user.id}}" class="text-success">{{journal.user.firstName}}</a> | On {{formatDate date 'MMMM do YYYY'}}
+                <a href="/journals/user/{{journal.user.id}}" class="text-success">{{journal.user.firstName}}</a> | On {{formatDate date 'MMMM Do YYYY'}}
             </span>
             <div class="content">
                 {{{journal.body}}}

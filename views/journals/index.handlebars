@@ -6,7 +6,7 @@
                 <a href="/journals/show/{{id}}" class="text-success">
                     <h4 class="text-capitalize mb-0 ">{{title}}</h4>
                 </a>
-                <span class="text-muted small ">By: {{user.firstName}} | on {{formatDate date 'MMMM do YYYY'}}</span>
+                <span class="text-muted small ">By: {{user.firstName}} | on {{formatDate date 'MMMM Do YYYY'}}</span>
                 <p class="mt-2">{{stripper (truncate body 150)}}</p>
                 <a href="/journals/show/{{id}} " class="btn btn-success btn-sm">
                     <i class="fas fa-glasses mr-2 "></i>Read More</a>
